@@ -1,0 +1,37 @@
+.background_img {
+  position: relative;
+  width: 100%;
+  height: auto;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+  }
+}
+
+.home_logo{
+    position: absolute;
+    top: 0;
+    left: 88%;
+    width: 5%;
+}
+
+.search_bar {
+  position: absolute;
+  width: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 25%;
+  left: 25%;
+  padding: 1%;
+  border-radius: 10px 10px 10px 10px;
+}
+
+input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
