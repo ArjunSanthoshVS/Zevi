@@ -1,0 +1,35 @@
+.card {
+  height: 300px;
+  border: none;
+  position: relative;
+
+  .prod_img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .view_product {
+    background: cornflowerblue;
+    color: white;
+    padding: 10px;
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    display: none;
+    transition: 1s;
+    opacity: 80%;
+  }
+
+  &:hover {
+    .view_product {
+      display: block;
+    }
+  }
+}
+
+.wish_icon {
+  position: absolute;
+  top: 0;
+  left: 87%;
+}

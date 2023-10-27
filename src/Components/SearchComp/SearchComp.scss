@@ -1,0 +1,20 @@
+.results_search_bar {
+  width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px 10px 10px 10px;
+    border: 1px solid #707070;
+}
+.results_logo{
+    width: 5%;
+      @media (max-width: 768px) {
+   width: 12%
+  }
+}
+.search_input{
+  border: none;
+  outline: none;
+  width: 100%;
+}

@@ -10,11 +10,11 @@
   }
 }
 
-.home_logo{
-    position: absolute;
-    top: 0;
-    left: 88%;
-    width: 5%;
+.home_logo {
+  position: absolute;
+  top: 0;
+  left: 88%;
+  width: 5%;
 }
 
 .search_bar {
@@ -27,11 +27,42 @@
   top: 25%;
   left: 25%;
   padding: 1%;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 10px;
 }
 
-input {
+.search_input {
   border: none;
   outline: none;
   width: 100%;
+}
+
+.suggestions {
+  position: absolute;
+  top: 50%; /* Center the suggestions vertically */
+  left: 50%; /* Center the suggestions horizontally */
+  transform: translate(-50%, -50%); /* Centering trick */
+  background-color: white;
+  width: 80%;
+  border-radius: 10px 10px 10px 10px;
+  padding: 10px;
+  box-shadow: black 0px 0px 24px -9px;
+
+  @media (max-width: 768px) {
+    width: 90%; /* Adjust for mobile view */
+  }
+}
+
+.product-list {
+  display: flex;
+  // flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.product {
+  width: 48%; /* For larger screens, display 2 products per row */
+  margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    width: 100%; /* For mobile view, display 1 product per row, taking up full width */
+  }
 }
