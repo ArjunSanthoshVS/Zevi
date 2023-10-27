@@ -25,7 +25,7 @@ interface FilterCompProps {
 const FilterComp: React.FC<FilterCompProps> = ({ setFilterCriteria }) => {
   const [loading, setLoading] = useState(true);
   const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
-  const [priceRanges, setPriceRanges] = useState<
+  const [priceRanges] = useState<
     { label: string; min: number; max: number }[]
   >([
     { label: "Under 1000", min: 0, max: 1000 },
