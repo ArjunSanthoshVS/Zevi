@@ -26,7 +26,7 @@ const Home: React.FC = () => {
       setState({ ...state, popularProducts: randomProducts });
     };
     fetchData();
-  }, [state]);
+  });
 
   const getRandomProducts = (products: Product[], count: number): Product[] => {
     const randomProducts: Product[] = [];
