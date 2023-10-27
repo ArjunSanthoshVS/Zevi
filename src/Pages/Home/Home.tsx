@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import "./Home.scss";
 import axios from "axios";
@@ -26,7 +27,7 @@ const Home: React.FC = () => {
       setState({ ...state, popularProducts: randomProducts });
     };
     fetchData();
-  });
+  }, []);
 
   const getRandomProducts = (products: Product[], count: number): Product[] => {
     const randomProducts: Product[] = [];
