@@ -4,6 +4,7 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import "./ProdComp.scss";
 import RatingStars from "../RatingComp/RatingStars";
 import ProdLoading from "../Loading/ProdLoading";
+import { useLocation } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -23,6 +24,7 @@ interface ProdCompProps {
     selectedPriceRanges: string[];
     selectedRatings: string[];
   };
+  // searchQuery: string;
 }
 
 const ProdComp: React.FC<ProdCompProps> = ({ filterCriteria }) => {
@@ -30,6 +32,9 @@ const ProdComp: React.FC<ProdCompProps> = ({ filterCriteria }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [wishlist, setWishlist] = useState<number[]>([]); // Store product IDs in the wishlist
+  const location = useLocation();
+ const searchParams = new URLSearchParams(location.search);
+ const query = searchParams.get("query");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,56 +45,63 @@ const ProdComp: React.FC<ProdCompProps> = ({ filterCriteria }) => {
     fetchData();
   }, []);
 
-   const toggleWishlist = (productId: number) => {
-     if (wishlist.includes(productId)) {
-       // Remove from wishlist
-       setWishlist(wishlist.filter((id) => id !== productId));
-     } else {
-       // Add to wishlist
-       setWishlist([...wishlist, productId]);
-     }
-   };
+  const toggleWishlist = (productId: number) => {
+    if (wishlist.includes(productId)) {
+      // Remove from wishlist
+      setWishlist(wishlist.filter((id) => id !== productId));
+    } else {
+      // Add to wishlist
+      setWishlist([...wishlist, productId]);
+    }
+  };
 
   // Filter products based on filter criteria
-  const filteredProducts = products.filter((product) => {
-    const { selectedCategories, selectedPriceRanges, selectedRatings } =
-      filterCriteria;
+  const filteredProducts = products
+    .filter((product) => {
+      const { selectedCategories, selectedPriceRanges, selectedRatings } =
+        filterCriteria;
 
-    // Category filter
-    if (
-      selectedCategories.length > 0 &&
-      !selectedCategories.includes(product.category)
-    ) {
-      return false;
-    }
-
-    // Price range filter
-    if (selectedPriceRanges.length > 0) {
-      console.log(selectedPriceRanges);
-
-      const price = product.price * 100;
-      console.log(price);
-
+      // Category filter
       if (
-        !selectedPriceRanges.some((range) => {
-          const [min, max] = range.split("to").map(Number);
-          return price >= min && price <= max;
-        })
+        selectedCategories.length > 0 &&
+        !selectedCategories.includes(product.category)
       ) {
         return false;
       }
-    }
 
-    // Rating filter
-    if (selectedRatings.length > 0) {
-      const normalizedRating = Math.ceil(product.rating.rate);
-      if (!selectedRatings.includes(normalizedRating.toString())) {
-        return false;
+      // Price range filter
+      if (selectedPriceRanges.length > 0) {
+        console.log(selectedPriceRanges);
+
+        const price = product.price * 100;
+        console.log(price);
+
+        if (
+          !selectedPriceRanges.some((range) => {
+            const [min, max] = range.split("to").map(Number);
+            return price >= min && price <= max;
+          })
+        ) {
+          return false;
+        }
       }
-    }
 
-    return true;
-  });
+      // Rating filter
+      if (selectedRatings.length > 0) {
+        const normalizedRating = Math.ceil(product.rating.rate);
+        if (!selectedRatings.includes(normalizedRating.toString())) {
+          return false;
+        }
+      }
+
+      return true;
+    })
+    .filter((product) => {
+      if (query) {
+        return product.title.toLowerCase().includes(query.toLowerCase());
+      }
+      return true;
+    });
 
   const totalPages = Math.ceil(filteredProducts.length / 8);
   const displayedProducts = filteredProducts.slice(

@@ -11,19 +11,17 @@ interface FilterCriteria {
 }
 
 const Results = () => {
-
   const [filterCriteria, setFilterCriteria] = useState<FilterCriteria>({
     selectedCategories: [],
     selectedPriceRanges: [],
     selectedRatings: [],
   });
-
   return (
     <div className="m-4">
       <SearchComp />
       <div className="d-flex">
         <FilterComp setFilterCriteria={setFilterCriteria} />
-        <ProdComp filterCriteria={filterCriteria} />
+        <ProdComp filterCriteria={filterCriteria}/>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import "./Home.scss";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -12,12 +13,15 @@ interface Product {
 interface HomeState {
   showSuggestions: boolean;
   popularProducts: Product[];
+  searchQuery: string;
 }
 
 const Home: React.FC = () => {
+  const navigate = useNavigate()
   const [state, setState] = useState<HomeState>({
     showSuggestions: false,
     popularProducts: [],
+    searchQuery: "",
   });
 
   useEffect(() => {
@@ -41,6 +45,15 @@ const Home: React.FC = () => {
   const handleSearchBarClick = () => {
     setState({ ...state, showSuggestions: true });
   };
+
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState({ ...state, searchQuery: e.target.value });
+  };
+
+  const handleSearchSubmit = () => {
+    navigate(`/products?query=${state.searchQuery}`);
+  };
+
   return (
     <>
       <img className="background_img img-fluid" src="/Backgrond.jpg" alt="" />
@@ -51,9 +64,16 @@ const Home: React.FC = () => {
           type="text"
           placeholder="Search"
           onClick={handleSearchBarClick}
+          onChange={handleSearchInputChange}
         />
-        <i className="fa-solid fa-magnifying-glass"></i>
+        <i
+          className="fa-solid fa-magnifying-glass"
+          onClick={handleSearchSubmit}
+          style={{cursor:"pointer"}}
+        ></i>
       </div>
+
+      <h4 className="all_products" onClick={()=>navigate('/products')}>All Products</h4>
 
       {state.showSuggestions && (
         <div className="suggestions justify-content-center d-block">
